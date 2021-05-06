@@ -14,7 +14,7 @@ def run(fn, text):
     # generate AST
     parser = px.Parser(tokens)
     ast = parser.parse()
-    return ast, None
+    return ast.node, ast.error
 
 
 while True:
