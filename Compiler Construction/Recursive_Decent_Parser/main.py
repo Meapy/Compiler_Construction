@@ -6,7 +6,6 @@ import Parser as px
 # RUN
 ##################################################
 
-
 def run(fn, text):
     lexer = lx.Lexer(fn, text)
     tokens, error = lexer.make_tokens()
