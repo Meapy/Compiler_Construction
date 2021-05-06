@@ -4,6 +4,7 @@ from Lexer import *
 ##################################################
 # NODES
 ##################################################
+
 class NumberNode:
     def __init__(self, tok):
         self.tok = tok
