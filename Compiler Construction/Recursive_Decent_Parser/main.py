@@ -6,6 +6,10 @@ import Interpreter as ix
 ##################################################
 # RUN
 ##################################################
+global_symbol_table = ix.SymbolTable()
+global_symbol_table.set("null", ix.Number(0))
+
+
 
 def run(fn, text):
     lexer = lx.Lexer(fn, text)
@@ -20,6 +24,7 @@ def run(fn, text):
     # Run program
     interpreter = ix.Interpreter()
     context = ix.Context('<program>')
+    context.symbol_table = global_symbol_table
     result = interpreter.visit(ast.node, context)
 
     return result.value, result.error
