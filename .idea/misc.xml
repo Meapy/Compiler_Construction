@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (Compiler_Construction)" project-jdk-type="Python SDK" />
+  <component name="ANTLRGenerationPreferences">
+    <option name="perGrammarGenerationSettings">
+      <list>
+        <PerGrammarGenerationSettings>
+          <option name="fileName" value="$PROJECT_DIR$/Compiler Construction/ANTLR/python3.g4" />
+          <option name="autoGen" value="true" />
+          <option name="outputDir" value="C:\Users\dkras\OneDrive\Documents\GitHub\Thur-Y-D\Compiler Construction\ANTLR\output" />
+          <option name="libDir" value="" />
+          <option name="encoding" value="" />
+          <option name="pkg" value="" />
+          <option name="language" value="Python3" />
+          <option name="generateVisitor" value="true" />
+        </PerGrammarGenerationSettings>
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (Thur-Y-D)" project-jdk-type="Python SDK" />
 </project>
