@@ -1,7 +1,7 @@
 grammar python3;
 
 @header {
-#include "TypeSpecifier.hpp"
+#include "TypeSpecifier.h"
 }
 
 /***************************************************
