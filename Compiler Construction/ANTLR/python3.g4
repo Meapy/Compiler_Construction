@@ -63,7 +63,7 @@ externalDeclaration
 declaration
     locals [
         backend::TypeSpecifier type,
-        char type_letter = 0
+        string type_letter = 0
     ]
     :   typeSpecifier Identifier (Comma Identifier)* Semi
     |   typeSpecifier assignmentExpression (Comma assignmentExpression)* Semi
@@ -78,16 +78,16 @@ declaration
 functionParameterList
     locals [
         backend::TypeSpecifier type,
-        char type_letter = 0,
+        string type_letter = 0,
     ]
     :   typeSpecifier Identifier (Comma typeSpecifier Identifier)*
     ;
 
 functionDefinition
     locals [
-        std::string function_header,
+        string function_header,
         std::vector <std::string> args,
-        std::string return_type,
+        string return_type,
         uint32_t num_local_vars = 0,
         size_t stack_size = 0,
     ]
@@ -121,8 +121,8 @@ statement
 
 printfStatement
     locals [
-        std::string format_string,
-        std::vector <std::string> args,
+        string format_string,
+        vector <std::string> args,
     ]
     // printf("Printing : %f", 100.0f);
     :   Printf LeftParen String ( Comma value )* RightParen Semi
