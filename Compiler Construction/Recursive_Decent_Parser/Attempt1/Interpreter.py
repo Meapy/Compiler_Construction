@@ -22,6 +22,7 @@ class RTResult:
         self.error = error
         return self
 
+
 ##################################################
 # VALUES
 ##################################################
@@ -66,7 +67,7 @@ class Number:
 
     def copy(self):
         copy = Number(self.value)
-        copy.set_pos(self.pos_start,self.pos_end)
+        copy.set_pos(self.pos_start, self.pos_end)
         copy.set_context(self.context)
         return copy
 
@@ -94,17 +95,18 @@ class SymbolTable:
         self.symbols = {}
         self.parent = None
 
-    def get(self,name):
-        value = self.symbols.get(name,None)
+    def get(self, name):
+        value = self.symbols.get(name, None)
         if value is None and self.parent:
             return self.parent.get(name)
         return value
 
-    def set(self,name,value):
+    def set(self, name, value):
         self.symbols[name] = value
 
-    def remove(self,name):
+    def remove(self, name):
         del self.symbols[name]
+
 
 ##################################################
 # INTERPRETER
@@ -126,25 +128,24 @@ class Interpreter:
             Number(node.tok.value).set_context(context).set_pos(node.pos_start, node.pos_end)
         )
 
-    def visit_VarAccessNode(self,node,context):
+    def visit_VarAccessNode(self, node, context):
         res = RTResult()
         var_name = node.var_name_tok.value
         value = context.symbol_table.get(var_name)
 
         if not value:
-            return res.failure(RTError(node.pos_start, node.pos_end,f"'{var_name}' is not defined",context))
-        value = value.copy().set_post(node.pos_start,node.pos_end)
+            return res.failure(RTError(node.pos_start, node.pos_end, f"'{var_name}' is not defined", context))
+        value = value.copy().set_pos(node.pos_start, node.pos_end)
         return res.success(value)
 
-    def visit_VarAssignNode(self,node,context):
+    def visit_VarAssignNode(self, node, context):
         res = RTResult()
         var_name = node.var_name_tok.value
-        value = res.register(self.visit(node.value_node,context))
+        value = res.register(self.visit(node.value_node, context))
         if res.error: return res
 
-        context.symbol_table.set(var_name,value)
+        context.symbol_table.set(var_name, value)
         return res.success(value)
-
 
     def visit_BinOpNode(self, node, context):
         res = RTResult()
