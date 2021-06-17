@@ -77,13 +77,6 @@ functionParameterList
     ;
 
 functionDefinition
-    locals [
-        string function_header,
-        vector <string> args,
-        string return_type,
-        uint32_t num_local_vars = 0,
-        size_t stack_size = 0,
-    ]
     :   typeSpecifier Identifier parameterTypeList
     ;
 
@@ -113,10 +106,6 @@ statement
     ;
 
 printfStatement
-    locals [
-        string format_string,
-        vector <string> args,
-    ]
     // printf("Printing : %f", 100.0f);
     :   Printf LeftParen String ( Comma value )* RightParen Semi
     ;
@@ -130,10 +119,8 @@ ifStatement
     :   If LeftParen conditionalExpression RightParen statement
     ;
 
+
 elseIfStatement
-    locals [
-        uint32_t id = 0
-    ]
     :   Else If LeftParen conditionalExpression RightParen statement
     ;
 
@@ -147,10 +134,6 @@ iterationStatement
 
 
 unaryStatement
-    locals [
-        backend::TypeSpecifier type,
-        char type_letter = '?'
-    ]
     :   PlusPlus   Identifier  # unaryIncrementStatement
     |   MinusMinus Identifier  # unaryDecrementStatement
     |   Identifier PlusPlus    # unaryIncrementStatement
@@ -169,11 +152,6 @@ identifierList
     ;
 
 expression
-    locals [
-        backend::TypeSpecifier type,
-        string expr_operator,
-        char type_letter = '?'
-    ]
     :   expression opr=( '*' | '/' | '%' ) expression                       # mulDivExpr
     |   expression opr=( '+' | '-' ) expression                             # addminExpr
     |   expression opr=( '<<' | '>>' | '&' | '|' | '~' | '^' ) expression   # bitExpr
@@ -181,10 +159,6 @@ expression
     ;
 
 primaryExpression
-    locals [
-        char type_letter = '?',
-        uint32_t current_nesting_level = 0
-    ]
     :   Identifier
     |   IntegerConstant
     |   FloatConstant
@@ -192,11 +166,6 @@ primaryExpression
     ;
 
 conditionalExpression
-    locals [
-        string iteration_name,  /// Stores the name of the parent statement (while_N | if_N)
-        string opr,             /// Stores the operator chars
-        string opcode           /// Stores the instruction opcode used in Pass 2
-    ]
     :   expression ConditionalOperator expression                               # basicConditionalExpr
     |   conditionalExpression ConditionalConnectOperator conditionalExpression  # connectedConditionalExpr
     |   LeftParen conditionalExpression RightParen                              # parenthesizedConditionalExpr
@@ -204,11 +173,6 @@ conditionalExpression
     ;
 
 assignmentExpression
-    locals [
-        backend::TypeSpecifier type,
-        char type_letter = 0,
-        uint32_t current_nesting_level = 0
-    ]
     :   Identifier Assign expression
     |   Identifier Assign functionReturn
     ;
