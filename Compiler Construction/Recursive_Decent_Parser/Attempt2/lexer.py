@@ -7,7 +7,7 @@ class Lexer:
 
     def _add_tokens(self):
         # Print
-        self.lexer.add('PRINT', r'print')
+        self.lexer.add('PRINT', r'printf')
         # Parenthesis
         self.lexer.add('OPEN_PAREN', r'\(')
         self.lexer.add('CLOSE_PAREN', r'\)')
@@ -16,10 +16,13 @@ class Lexer:
         # Operators
         self.lexer.add('SUM', r'\+')
         self.lexer.add('SUB', r'\-')
+        self.lexer.add('MUL', r'\*')
+        self.lexer.add('DIV', r'\/')
         # Number
         self.lexer.add('NUMBER', r'\d+')
-        #quotations
-        self.lexer.add('Quote', r'\"')
+        # quotations
+        #self.lexer.add('QUOTE', r'\"')
+        self.lexer.add('STRING', r'"[^"]*"')
         # Ignore spaces
         self.lexer.ignore('\s+')
 

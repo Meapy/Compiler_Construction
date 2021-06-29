@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from ast import Number, Sum, Sub, Print
+from ast import *
 
 
 class Parser():
@@ -7,7 +7,7 @@ class Parser():
         self.pg = ParserGenerator(
             # A list of all token names accepted by the parser.
             ['NUMBER', 'PRINT', 'OPEN_PAREN', 'CLOSE_PAREN',
-             'SEMI_COLON', 'SUM', 'SUB']
+             'SEMI_COLON', 'SUM', 'SUB', 'MUL', 'DIV', 'STRING']
         )
         self.module = module
         self.builder = builder
@@ -15,11 +15,14 @@ class Parser():
 
     def parse(self):
         @self.pg.production('program : PRINT OPEN_PAREN expression CLOSE_PAREN SEMI_COLON')
+        @self.pg.production('program : PRINT OPEN_PAREN string CLOSE_PAREN SEMI_COLON')
         def program(p):
             return Print(self.builder, self.module, self.printf, p[2])
 
         @self.pg.production('expression : expression SUM expression')
         @self.pg.production('expression : expression SUB expression')
+        @self.pg.production('expression : expression MUL expression')
+        @self.pg.production('expression : expression DIV expression')
         def expression(p):
             left = p[0]
             right = p[2]
@@ -28,10 +31,21 @@ class Parser():
                 return Sum(self.builder, self.module, left, right)
             elif operator.gettokentype() == 'SUB':
                 return Sub(self.builder, self.module, left, right)
+            elif operator.gettokentype() == 'MUL':
+                return Mul(self.builder, self.module, left, right)
+            elif operator.gettokentype() == 'DIV':
+                return Div(self.builder, self.module, left, right)
 
         @self.pg.production('expression : NUMBER')
         def number(p):
+            print(p[0].value)
             return Number(self.builder, self.module, p[0].value)
+
+        @self.pg.production('string : STRING')
+        def string(p):
+            print(p[0].value)
+            text = ""
+            return String(self.builder, self.module, p[0].value)
 
         @self.pg.error
         def error_handle(token):

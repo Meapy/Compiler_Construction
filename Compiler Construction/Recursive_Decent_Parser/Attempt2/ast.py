@@ -1,4 +1,5 @@
 from llvmlite import ir
+from rply.token import BaseBox
 
 
 class Number():
@@ -10,6 +11,16 @@ class Number():
     def eval(self):
         i = ir.Constant(ir.IntType(8), int(self.value))
         return i
+
+
+class String():
+    def __init__(self, builder, module, value):
+        self.builder = builder
+        self.module = module
+        self.value = value
+
+    def eval(self):
+        return self.value
 
 
 class BinaryOp():
@@ -29,6 +40,18 @@ class Sum(BinaryOp):
 class Sub(BinaryOp):
     def eval(self):
         i = self.builder.sub(self.left.eval(), self.right.eval())
+        return i
+
+
+class Mul(BinaryOp):
+    def eval(self):
+        i = self.builder.mul(self.left.eval(), self.right.eval())
+        return i
+
+
+class Div(BinaryOp):
+    def eval(self):
+        i = self.builder.div(self.left.eval(), self.right.eval())
         return i
 
 

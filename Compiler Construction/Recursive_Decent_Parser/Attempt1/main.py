@@ -19,6 +19,7 @@ def run(fn, text):
     # generate AST
     parser = px.Parser(tokens)
     ast = parser.parse()
+
     if ast.error: return None, ast.error
 
     # Run program

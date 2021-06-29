@@ -1,2 +1,2 @@
-print(5 + 5);
+printf("hello");
 
